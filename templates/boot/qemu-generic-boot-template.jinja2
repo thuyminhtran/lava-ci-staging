@@ -45,4 +45,9 @@ actions:
       - 'linaro-test'
       - 'root@debian:~#'
       - '/ #'
+
+{% for test_template in test_templates %}
+{% include test_template %}
+{%- endfor %}
+
 {% endblock %}

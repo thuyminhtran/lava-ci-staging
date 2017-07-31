@@ -55,7 +55,8 @@ def main(args):
     token = config.get('token')
     api = config.get('api')
     storage = config.get('storage')
-
+    tests = config.get('tests')
+    
     if not token:
         raise Exception("No token provided")
     if not api:
@@ -259,6 +260,9 @@ def main(args):
                                                'lab_name': lab_name,
                                                'callback_name': callback_name
                                         }
+                                        if tests:
+                                            print "Appending test templates", tests
+                                            job['test_templates'] = tests
                                         jobs.append(job)
             else:
                 print "no kernel_image for %s" % build['defconfig_full']
@@ -295,6 +299,7 @@ if __name__ == '__main__':
                         help="priority for LAVA jobs", default='high')
     parser.add_argument("--callback", help="Add a callback notification to the Job YAML")
     parser.add_argument("--defconfigs", help="Expected number of defconfigs from the API", default=0)
+    parser.add_argument("--tests", nargs='+', help="Additional test templates to append to boot job")
     args = vars(parser.parse_args())
     if args:
         main(args)
